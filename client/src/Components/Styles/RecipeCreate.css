@@ -1,0 +1,23 @@
+p.danger {
+    color: red;
+    font-size: 10px;
+  }
+  
+  input.danger {
+    border: 2px solid red;
+  }
+
+  input.green{
+      border: 2px solid rgb(0, 110, 0)
+  }
+
+  .DivForm{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      
+}
+.imgCheck{
+    background-color: transparent;
+}
+  

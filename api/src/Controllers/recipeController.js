@@ -6,7 +6,7 @@ require("dotenv").config();
 const { API_KEY, CANT_RECIPE } = process.env;
 
 const GetSpoonacularScore = (summary) => {
-  let index = summary.indexOf("spoonacular score of") + 21;
+  let index = summary.indexOf("score of") + 9;
   let number = summary.substring(index, [index + 4]);
   let numberFinal = "";
   for (let i = 0; i < number.length; i++) {
@@ -27,7 +27,7 @@ const getRecipe = async () => {
       summary: e.summary,
       image: e.image,
       preparationTime: e.preparationMinutes,
-      diets: e.diets.map((e) => {
+      Diets: e.diets.map((e) => {
         return { nameDiet: e };
       }),
       Instructions: e.analyzedInstructions[0]?.steps.map((e) => {

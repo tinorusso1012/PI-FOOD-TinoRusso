@@ -7,7 +7,7 @@ const {
   getRecipeFromDb,
   getApiAndDb,
 } = require("../Controllers/recipeController");
-const { GetByID, GetIdDb } = require("../Controllers/recipeIdController");
+const { getIdAll } = require("../Controllers/recipeIdController");
 
 router.get("/", async (req, res) => {
   try {
@@ -31,46 +31,51 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/:idRecipe", async (req, res) => {
+router.get("/:idRecipe", async (req, res, next) => {
   try {
-    const { idRecipe } = req.params;
-    const dbId = await GetIdDb(idRecipe);
-    if (dbId) {
-      res.json(dbId);
-    } else {
-      const IdApi = await GetByID(idRecipe);
-      if (IdApi) {
-        res.json(IdApi);
-      }
+    const id = req.params.idRecipe;
+    const recipeDetail = await getIdAll(id);
+    if (!recipeDetail) {
+      return res.status(404).json("No recipe under that id");
     }
-  } catch (err) {
-    console.log(err);
+    res.status(200).json(recipeDetail);
+  } catch (error) {
+    next(error);
   }
 });
 
 router.post("/recipe", async (req, res) => {
   let {
-    tittle,
+    title,
     summary,
     spoonacularScore,
     HealthScore,
+    image,
     steps,
-    Image,
-    MadeOnDb,
-    diets,
+    DB,
+    dishTypes,
+    servings,
+    Diets,
   } = req.body;
   try {
+    const DietsOriginal = Diets;
+    Diets = Diets.map((e) => {
+      return { nameDiet: e };
+    });
     let newRecipe = await Recipe.create({
-      tittle,
+      title,
       summary,
       spoonacularScore,
       HealthScore,
+      image,
       steps,
-      Image,
-      MadeOnDb,
+      DB,
+      dishTypes,
+      servings,
+      Diets,
     });
     let dietsdb = await Diet.findOne({
-      where: { name: diets },
+      where: { name: DietsOriginal },
     });
     newRecipe.addDiet(dietsdb);
     res.status(201).json(newRecipe);
@@ -79,4 +84,5 @@ router.post("/recipe", async (req, res) => {
     res.status(404).json(err);
   }
 });
+
 module.exports = router;

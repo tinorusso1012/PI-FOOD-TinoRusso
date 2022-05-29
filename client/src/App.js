@@ -1,19 +1,19 @@
 import "./App.css";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import LandingPage from "./Components/LandingPage";
 import Home from "./Components/Home";
+import RecipeCreate from "./Components/RecipeCreate";
+import Detail from "./Components/Detail.jsx";
 function App() {
   return (
-    <Router>
-      <div className="App">
-        <Route path="/" exact>
-          <LandingPage />
-        </Route>
-        <Route path="/home" exact>
-          <Home />
-        </Route>
-      </div>
-    </Router>
+    <div className="App">
+      <Router>
+        <Route path="/" exact component={LandingPage} />
+        <Route path="/home" exact component={Home} />
+        <Route path="/recipe" exact component={RecipeCreate} />
+        <Route path="/home/:id" component={Detail} />
+      </Router>
+    </div>
   );
 }
 

@@ -5,7 +5,7 @@ const { DataTypes } = require("sequelize");
 module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define("recipe", {
-    tittle: {
+    title: {
       type: DataTypes.STRING,
       allowNull: false,
     },
@@ -40,7 +40,7 @@ module.exports = (sequelize) => {
         "https://previews.123rf.com/images/jenifoto/jenifoto2006/jenifoto200600100/150438480-marco-de-comida-de-barbacoa-de-verano-con-hot-dog-y-buffet-de-hamburguesas-sobre-un-fondo-de-madera-.jpg",
     },
     steps: {
-      type: DataTypes.STRING,
+      type: DataTypes.ARRAY(DataTypes.JSON),
     },
     DB: {
       type: DataTypes.BOOLEAN,
@@ -50,8 +50,11 @@ module.exports = (sequelize) => {
     dishTypes: {
       type: DataTypes.ARRAY(DataTypes.JSON),
     },
-    servings:{
-      type:DataTypes.INTEGER,
-    }
+    Diets: {
+      type: DataTypes.ARRAY(DataTypes.JSON),
+    },
+    servings: {
+      type: DataTypes.INTEGER,
+    },
   });
 };
