@@ -45,9 +45,11 @@ export default function Home() {
   }
   function handleFilterDiets(e) {
     dispatch(FilterRecipesByDiets(e.target.value));
+    setCurrentPage(1);
   }
   function handleFilterByCreate(e) {
     dispatch(FilterByCreate(e.target.value));
+    setCurrentPage(1);
   }
   function handleFilterByName(e) {
     e.preventDefault();
