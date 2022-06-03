@@ -4,19 +4,27 @@ import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { PostRecipe, getDiets } from "../Actions";
 import { validate } from "./validation/validation1";
-import "./Styles/RecipeCreate.css"
+import { validateArray } from "./validation/validation2";
+
+import styles from "./Styles/RecipeCreate.module.css";
 import check from "../images.png";
+import rataCocinando from "../Imagenes/RataImg.jpeg";
 
 export default function RecipeCreate() {
   const dispatch = useDispatch();
   let listOfDiets = useSelector((state) => state.diets);
   const [cantSteps, setCantSteps] = useState(1);
   const [errors, setErrors] = useState({
-    title: "Username is required",
-    summary: "summary is required",
-    spoonacularScore: "Score is required",
-    HealthScore: "HealthScore is required",
-    image: "",
+    title: " ",
+    summary: " ",
+    spoonacularScore: " ",
+    HealthScore: " ",
+    image: " ",
+    readyInMinutes: " ",
+    servings: " ",
+  });
+  const [errorsArr, setErrorsArr] = useState({
+    diets: "",
   });
   const [diet, setDiet] = useState([]);
   const [newDiet, setNewDiet] = useState("");
@@ -27,14 +35,15 @@ export default function RecipeCreate() {
   const [input, setInput] = useState({
     title: "",
     summary: "",
-    spoonacularScore: 0,
-    HealthScore: 0,
+    spoonacularScore: "",
+    HealthScore: "",
+    readyInMinutes: "",
     image: undefined,
     steps: [],
     DB: true,
     dishTypes: [],
-    servings: 0,
-    Diets: [],
+    servings: "",
+    diets: [],
   });
 
   useEffect(() => {
@@ -78,16 +87,21 @@ export default function RecipeCreate() {
     setFinalStep(arr);
   }
 
-  function handleNewDiet(e) {
-    setNewDiet(e.target.value);
-  }
   function handleDishType(e) {
     setDishTypes(e.target.value);
   }
+  function handleNewDiet(e) {
+    setErrorsArr(validateArray(e.target.value, listOfDiets));
+    console.log(errorsArr);
+    setNewDiet(e.target.value);
+  }
   function setNewDietClick(e) {
     e.preventDefault();
-    listOfDiets.push({ name: newDiet });
-    setNewDiet("");
+    if (!errorsArr.diets) {
+      listOfDiets.push({ name: newDiet });
+      setNewDiet("");
+    } else {
+    }
   }
   function HandlePost(e) {
     e.preventDefault();
@@ -103,14 +117,15 @@ export default function RecipeCreate() {
         PostError: "Faltan Llenar Formularios Obligatorios o corregirlos",
       });
     }
-    setInput((input.Diets = diet));
-    setInput((input.Finalstep = step));
+    setInput((input.diets = diet));
+    setInput((input.steps = Finalstep));
     let arr = DishTypes;
     arr = arr.split(",");
     arr = arr.map((e) => {
       return { name: e };
     });
     setInput((input.dishTypes = arr));
+    console.log(input);
     dispatch(PostRecipe(input))
       .then(() => {
         alert("Recipe Created");
@@ -124,7 +139,7 @@ export default function RecipeCreate() {
           DB: true,
           dishTypes: [],
           servings: 0,
-          Diets: [],
+          diets: [],
         });
       })
       .catch((err) => {
@@ -134,202 +149,297 @@ export default function RecipeCreate() {
   }
 
   return (
-    <div>
-      <Link to="/home">
-        <button>Volver</button>
-      </Link>
-      <h1>Crea tu Receta!</h1>
-      <form>
-        <div className="DivForm">
-          <label>Title // Titulo</label>
-          <input
-            className={errors.title ? "danger" : "green"}
-            type="text"
-            name="title"
-            value={input.title}
-            onChange={(e) => handleChange(e)}
-          />
-          {errors.title ? (
-            <p className="danger">{errors.title}</p>
-          ) : (
-            <img
-              src={check}
-              className="imgCheck"
-              alt="img not found"
-              width="30px"
-              height="25px"
-            />
-          )}
-        </div>
-        <div className="DivForm">
-          <label>Summary // Resumen:</label>
-          <input
-            className={errors.summary ? "danger" : "green"}
-            type="text"
-            name="summary"
-            value={input.summary}
-            onChange={(e) => handleChange(e)}
-          />
-          {errors.summary ? (
-            <p className="danger">{errors.summary}</p>
-          ) : (
-            <img
-              src={check}
-              className="imgCheck"
-              alt="img not found"
-              width="30px"
-              height="25px"
-            />
-          )}
-        </div>
-        <div className="DivForm">
-          <label>Image // Imagen:</label>
-          <input
-            className={errors.image ? "danger" : "green"}
-            type="text"
-            name="image"
-            value={input.image}
-            onChange={(e) => handleChange(e)}
-          />
-          {errors.image ? (
-            <p className="danger">{errors.image}</p>
-          ) : (
-            <img
-              src={check}
-              className="imgCheck"
-              alt="img not found"
-              width="30px"
-              height="25px"
-            />
-          )}
-        </div>
-        <h4> Diets // Dietas</h4>
-        <div>
-          {listOfDiets &&
-            listOfDiets.map((e, i) => (
-              <label key={i}>
-                <input
-                  type="checkbox"
-                  name={e.name}
-                  value={e.name}
-                  onChange={(e) => handleCheckbox(e)}
+    <div className={styles.background}>
+      {/* Contenedor navBar */}
+      <div className={styles.contNavBarPadre}>
+        <Link to="/home">
+          <img src={rataCocinando} alt="img not found" className={styles.img} />
+        </Link>
+        <Link to="/" className={styles.navRec}>
+          Recipers
+        </Link>
+        <Link to="/home">
+          {" "}
+          <button className={styles.button}>Home</button>
+        </Link>
+      </div>
+      <div className={styles.DivPadre}>
+        <h1 className={styles.title}>Make your Recipe!</h1>
+        <form>
+          <div className={styles.DivFormPadre}>
+            <div className={styles.FormTitle}>
+              <label className={styles.TitleForm}>Title: </label>
+              <input
+                className={errors.title ? styles.danger : styles.green}
+                type="text"
+                name="title"
+                value={input.title}
+                onChange={(e) => handleChange(e)}
+              />
+              {errors.title ? (
+                <p className={styles.danger}>{errors.title}</p>
+              ) : (
+                <img
+                  src={check}
+                  className={styles.imgCheck}
+                  alt="img not found"
+                  width="30px"
+                  height="25px"
                 />
-                {e.name}
-              </label>
-            ))}
-        </div>
-        <input
-          type="text"
-          value={newDiet}
-          placeholder="Ingrese Nueva Dieta"
-          onChange={(e) => handleNewDiet(e)}
-        ></input>
-        <button onClick={(e) => setNewDietClick(e)}>Enviar Nueva Receta</button>
-        <div className="DivForm">
-          <label>Score // Puntuacion:</label>
-          <input
-            className={errors.spoonacularScore ? "danger" : "green"}
-            type="number"
-            name="spoonacularScore"
-            onChange={(e) => handleChange(e)}
-            value={input.spoonacularScore}
-          />
-          {errors.spoonacularScore ? (
-            <p className="danger">{errors.spoonacularScore}</p>
-          ) : (
-            <img
-              src={check}
-              className="imgCheck"
-              alt="img not found"
-              width="30px"
-              height="25px"
-            />
-          )}
-        </div>
-        <div className="DivForm">
-          <label>HealtScore // Puntuacion de salud:</label>
-          <input
-            className={errors.HealthScore ? "danger" : "green"}
-            type="number"
-            name="HealthScore"
-            value={input.HealthScore}
-            onChange={(e) => handleChange(e)}
-          />
-          {errors.HealthScore ? (
-            <p className="danger">{errors.HealthScore}</p>
-          ) : (
-            <img
-              src={check}
-              className="imgCheck"
-              alt="img not found"
-              width="30px"
-              height="25px"
-            />
-          )}
-        </div>
-        <div>
-          <label>Servings // Porciones:</label>
-          <input
-            type="number"
-            name="servings"
-            value={input.servings}
-            onChange={(e) => handleChange(e)}
-          />
-        </div>
-        <div>
-          <label>Dish Type // Tipo de Plato:</label>
-          <input
-            type="text"
-            name="dishTypes"
-            onChange={(e) => {
-              handleDishType(e);
-            }}
-          />
-        </div>
-        <div>
-          <label>Ingrese la cantidad de pasos:</label>
-          <input
-            type="number"
-            name="cantSteps"
-            value={cantSteps}
-            onChange={(e) => {
-              handlesetCantSteps(e);
-            }}
-          />
-          <button
-            onClick={(e) => {
-              handleStep(e);
-            }}
-          >
-            Enviar
-          </button>
-        </div>
-        <div>
-          {Do &&
-            step.map((step, i) => (
-              <div key={i}>
-                <label> Step / Paso{step}: </label>
-                <input
-                  type="text"
-                  name={step}
-                  onChange={(e) => {
-                    handleStepInArray(e);
-                  }}
+              )}
+            </div>
+            <div className={styles.FormTitle}>
+              <label>Summary:</label>
+              <input
+                className={errors.summary ? styles.danger : styles.green}
+                type="text"
+                name="summary"
+                value={input.summary}
+                onChange={(e) => handleChange(e)}
+              />
+              {errors.summary ? (
+                <p className={styles.danger}>{errors.summary}</p>
+              ) : (
+                <img
+                  src={check}
+                  className={styles.imgCheck}
+                  alt="img not found"
+                  width="30px"
+                  height="25px"
                 />
-              </div>
-            ))}
+              )}
+            </div>
+            <div className={styles.FormTitle}>
+              <label>Image:</label>
+              <input
+                className={errors.image && styles.danger}
+                type="text"
+                name="image"
+                value={input.image}
+                onChange={(e) => handleChange(e)}
+              />
+              {errors.image ? (
+                <p className={styles.danger}>{errors.image}</p>
+              ) : (
+                <img
+                  src={check}
+                  className={styles.imgCheck}
+                  alt="img not found"
+                  width="30px"
+                  height="25px"
+                />
+              )}
+            </div>
+            <h4> diets:</h4>
+            <div>
+              {listOfDiets &&
+                listOfDiets.map((e, i) => (
+                  <label key={i}>
+                    <input
+                      type="checkbox"
+                      name={e.name}
+                      value={e.name}
+                      onChange={(e) => handleCheckbox(e)}
+                    />
+                    {e.name}
+                  </label>
+                ))}
+            </div>
+            <div className={styles.FormTitle}>
+              <input
+                type="text"
+                value={newDiet}
+                placeholder="Enter new diet..."
+                onChange={(e) => handleNewDiet(e)}
+              ></input>
+              <button disabled={!newDiet} onClick={(e) => setNewDietClick(e)}>
+                Enviar Nueva Receta
+              </button>
+              {errorsArr.diets && (
+                <p className={styles.danger}>{errorsArr.diets}</p>
+              )}
+            </div>
+            <div className={styles.FormTitle}>
+              <label>Score of Recipe:</label>
+              <input
+                className={
+                  errors.spoonacularScore ? styles.danger : styles.green
+                }
+                type="number"
+                min="0"
+                name="spoonacularScore"
+                onChange={(e) => handleChange(e)}
+                value={input.spoonacularScore}
+              />
+              {errors.spoonacularScore ? (
+                <p className={styles.danger}>{errors.spoonacularScore}</p>
+              ) : (
+                <img
+                  src={check}
+                  className={styles.imgCheck}
+                  alt="img not found"
+                  width="30px"
+                  height="25px"
+                />
+              )}
+            </div>
+            <div className={styles.FormTitle}>
+              <label>Ready in Minutes:</label>
+              <input
+                className={errors.readyInMinutes ? styles.danger : styles.green}
+                type="number"
+                min="0"
+                name="readyInMinutes"
+                onChange={(e) => handleChange(e)}
+                value={input.readyInMinutes}
+              />
+              {errors.readyInMinutes ? (
+                <p className={styles.danger}>{errors.readyInMinutes}</p>
+              ) : (
+                <img
+                  src={check}
+                  className={styles.imgCheck}
+                  alt="img not found"
+                  width="30px"
+                  height="25px"
+                />
+              )}
+            </div>
+            <div className={styles.FormTitle}>
+              <label>HealtScore:</label>
+              <input
+                className={errors.HealthScore ? styles.danger : styles.green}
+                type="number"
+                min="0"
+                name="HealthScore"
+                value={input.HealthScore}
+                onChange={(e) => handleChange(e)}
+              />
+              {errors.HealthScore ? (
+                <p className={styles.danger}>{errors.HealthScore}</p>
+              ) : (
+                <img
+                  src={check}
+                  className={styles.imgCheck}
+                  alt="img not found"
+                  width="30px"
+                  height="25px"
+                />
+              )}
+            </div>
+            <div className={styles.FormTitle}>
+              <label>Servings:</label>
+              <input
+                className={errors.servings ? styles.danger : styles.green}
+                type="number"
+                min="0"
+                name="servings"
+                value={input.servings}
+                onChange={(e) => handleChange(e)}
+              />
+              {errors.servings ? (
+                <p className={styles.danger}>{errors.servings}</p>
+              ) : (
+                <img
+                  src={check}
+                  className={styles.imgCheck}
+                  alt="img not found"
+                  width="30px"
+                  height="25px"
+                />
+              )}
+            </div>
+            <div className={styles.FormTitle}>
+              <label>Dish Type :</label>
+              <input
+                type="text"
+                name="dishTypes"
+                onChange={(e) => {
+                  handleDishType(e);
+                }}
+              />
+            </div>
+            <div className={styles.NumberOfSteps}>
+              <label>Number of steps your recipe will have:</label>
+              <input
+                type="number"
+                name="cantSteps"
+                value={cantSteps}
+                onChange={(e) => {
+                  handlesetCantSteps(e);
+                }}
+              />
+              <button
+                onClick={(e) => {
+                  handleStep(e);
+                }}
+              >
+                Enviar
+              </button>
+            </div>
+            <div>
+              {Do &&
+                step.map((step, i) => (
+                  <div key={i} className={styles.steps}>
+                    <label> Step {step}: </label>
+                    <input
+                      type="text"
+                      name={step}
+                      onChange={(e) => {
+                        handleStepInArray(e);
+                      }}
+                    />
+                  </div>
+                ))}
+            </div>
+            <div className="DivForm">
+              <button
+                onClick={(e) => {
+                  HandlePost(e);
+                }}
+              >
+                Create Recipe
+              </button>
+              {errors.PostError && (
+                <p className={styles.danger}>{errors.PostError}</p>
+              )}
+            </div>
+          </div>
+        </form>
+      </div>
+      {/* cardS */}
+      <div>{/* div vacio */}</div>
+      <div className={styles.card}>
+        <h3>Example of Card:</h3>
+        {input.image ? (
+          <img
+            src={input.image}
+            alt="img not valid.."
+            className={styles.imgCard}
+          />
+        ) : (
+          <img
+            src="https://previews.123rf.com/images/jenifoto/jenifoto2006/jenifoto200600100/150438480-marco-de-comida-de-barbacoa-de-verano-con-hot-dog-y-buffet-de-hamburguesas-sobre-un-fondo-de-madera-.jpg"
+            className={styles.imgDefault}
+            alt="img not valid"
+          />
+        )}
+        <div className={styles.cardText}>
+          <h3 className={styles.titleCards}>{input.title}</h3>
+          <h4 className={styles.ps}>Puntuacion: {input.score}</h4>
+          <h4 className={styles.ps}>Servings:{input.servings}</h4>
+          <div className={styles.dietsPs}>
+            {
+              <ul className={styles.ps}>
+                Diets:
+                {diet.map((e, i) => {
+                  return <li key={i}>{e}</li>;
+                })}
+              </ul>
+            }
+          </div>
         </div>
-        <div className="DivForm">
-          <button
-            onClick={(e) => {
-              HandlePost(e);
-            }}
-          >
-            Crear RECETA
-          </button>
-          {errors.PostError && <p className="danger">{errors.PostError}</p>}
-        </div>
-      </form>
+      </div>
     </div>
   );
 }

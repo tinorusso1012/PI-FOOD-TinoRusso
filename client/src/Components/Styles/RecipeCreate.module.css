@@ -1,0 +1,206 @@
+p.danger {
+    color: red;
+    font-size: 10px;
+  }
+  
+  input.danger {
+    border: 2px solid red;
+  }
+
+  input.green{
+      border: 2px solid rgb(0, 110, 0)
+  }
+
+.imgCheck{
+    background-color: transparent;
+    border: solid black;
+    right: 5px !important;
+}
+.img{
+  width: 4rem;
+  height: 20;
+  border-radius: 10px;
+}
+.background{
+  height: 100vh;
+  width: 100%;
+  background-image: url(../../Imagenes/imagenCreateRecipe4.jpeg);
+  background-size: cover;
+  background-position: center;
+  overflow: auto;
+  padding: 30px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: auto;
+}
+.DivPadre{
+  background: rgba(255,255,255,0.2);
+  box-shadow: 0 0 10px rgb(255, 255, 255);
+  border-radius: 25px;
+  backdrop-filter: blur(5px);
+  border: 3px solid rgb(255, 255, 255);
+  grid-column:1/3;
+  grid-row: 2/5;
+  width: auto;
+  height: auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: minmax(100px, auto);
+}
+
+.contNavBarPadre{
+  background-color: transparent;
+  display: flex ;
+  justify-content: center;
+  position: relative;
+  flex-direction:row;
+  align-items:center;
+  place-content: space-around;
+  padding: 2% 0% 2% 0%;
+  grid-column-start: 1;
+  grid-column-end: 5;
+}
+
+.navRec{
+  background-color: rgb(255, 255, 255);
+  border-radius: 20px;
+  border: none;
+  padding: 10px 25px 10px 25px;
+  box-shadow: 5px 2px 2px 1px rgba(0, 0, 0, 0.2);
+  font-weight: 20;
+  font-size: 20px;
+}
+.navRec:hover{
+  background-color: #2B3951;
+  transition-delay: 0.2s;
+  transition: 0.8s;
+  color: white;
+  cursor: pointer;
+}
+.button{
+  background-color: rgb(255, 255, 255);
+  border-radius: 20px;
+  border: none;
+  padding: 10px 7px 10px 7px;
+  box-shadow: 5px 2px 2px 1px rgba(0, 0, 0, 0.2);
+  left: 10px;
+}
+.button:hover{
+  background-color: #2B3951;
+  transition-delay: 0.2s;
+  transition: 0.8s;
+  color: white;
+  cursor: pointer;
+}
+form{
+  grid-column: 1 / 5;
+}
+.DivForm {
+  grid-column: 1 / 5;
+  grid-row: 2;
+}
+.title{
+    grid-column: 1 / 5;
+    grid-row: 1;
+}
+.FormTitle{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.TitleForm{
+  justify-content: flex-start;
+  font-size: 700;
+}
+.FormTitle input{
+  background-color: rgb(255, 255, 255);
+  border-radius: 15px;
+  border: solid black;
+  padding: 8px 5px 8px 5px;
+  box-shadow: 5px 2px 2px 1px rgba(0, 0, 0, 0.2);
+  left: 10px;
+}
+.NumberOfSteps input{
+  background-color: rgb(255, 255, 255);
+  border-radius: 15px;
+  border: solid black;
+  padding: 8px 5px 8px 5px;
+  box-shadow: 5px 2px 2px 1px rgba(0, 0, 0, 0.2);
+  left: 10px;
+  size: 5px;
+}
+.steps input{
+  background-color: rgb(255, 255, 255);
+  border-radius: 15px;
+  border: solid black;
+  padding: 8px 5px 8px 5px;
+  box-shadow: 5px 2px 2px 1px rgba(0, 0, 0, 0.2);
+  left: 10px;
+  size: 5rem;
+  width: 300px;
+  height: 75px;
+  font-size: 15px;
+}
+/* CARD */
+.CardEjemplo{
+  background: rgba(255,255,255,1);
+  box-shadow: 0 0 10px rgb(255, 255, 255);
+  border-radius: 25px;
+  backdrop-filter: blur(5px);
+  border: 3px solid rgb(255, 255, 255);
+  grid-column:3/5;
+  grid-row: 2/5;
+}
+.imgDefault{
+  width: 15rem;
+  height: 200;
+  border-radius: 10px;
+}
+
+.cardText{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;    
+    margin-top: 5px;
+    margin-bottom: 0px;
+    margin-right: 2px;
+    margin-left: 2px;
+    text-decoration: none;
+
+}
+
+.card{  
+  display: flex;
+  flex-direction: column;
+  width: 15rem; 
+  background-color: rgb(255, 255, 255);
+  /* ver si la heigth conviene que sea "auto" */
+  height: auto;
+  align-items: center;
+  border-style: none;
+  background-size:cover;
+  border-radius: 10px;
+  transition: transform .5s;
+  margin-top: 20px;
+  margin-bottom: 15px;
+  margin-right: 2px;
+  margin-left: 2px;
+  background-color: rgba(255, 255, 255, 0.767);
+  text-decoration: none;
+  box-shadow: 5px 2px 2px 1px rgba(0, 0, 0, 0.2);
+}  
+.card:hover{
+  transform: scale(1.1);
+}
+
+.imgCard{
+  width: 15rem;
+  height: 200;
+  border-radius: 10px;
+}
+
+
+

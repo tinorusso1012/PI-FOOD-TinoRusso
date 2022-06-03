@@ -12,6 +12,9 @@ import { Link } from "react-router-dom";
 import Card from "./Card";
 import Paginado from "./Paginado";
 import SearchBar from "./SearchBar";
+import styles from "./Styles/Home..module.css";
+import pizza from "../Imagenes/PizzaLoading.gif";
+import rataCocinando from "../Imagenes/RataImg.jpeg";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -60,87 +63,139 @@ export default function Home() {
   }
 
   return (
-    <div>
-      <Link to="/recipe">Crear Receta</Link>
-      <h1>Recetas de Comidas</h1>
-      <SearchBar />
-      {console.log(AllRecipes)}
-      <button
-        onClick={(e) => {
-          handleClick(e);
-        }}
-      >
-        Volver a cagar todas las recetas
-      </button>
-      <div>
-        <h3>Ordenamiento por Name </h3>
-        <select
-          onChange={(e) => {
-            handleFilterByName(e);
-          }}
-        >
-          <option disabled selected>
-            Alphabetic Order
-          </option>
-          <option value="asc">Ascendente</option>
-          <option value="desc">Descendente</option>
-        </select>
-        <h3>Ordenamiento por Creacion </h3>
-        <select onChange={(e) => handleFilterByCreate(e)}>
-          <option disabled selected>
-            Order by Creation
-          </option>
-          <option value="All">All - API AND DATABASE</option>
-          <option value="created">Recipe in DataBase </option>
-          <option value="api">Recipe in API </option>
-        </select>
-        <h3>Ordenamiento por Score </h3>
-        <select
-          onChange={(e) => {
-            handleFilterByScore(e);
-          }}
-        >
-          <option disabled selected>
-            Filter by Points
-          </option>
-          <option value="asc">Ascendente</option>
-          <option value="desc">Descendente</option>
-        </select>
-        <h3>Ordenamiento por Diets </h3>
-        <select onChange={(e) => handleFilterDiets(e)}>
-          <option disabled selected>
-            Search by Diets
-          </option>
-          <option value="All">All</option>
-          {AllDiets &&
-            AllDiets.map((e, i) => {
-              return (
-                <option key={i} value={e.name}>
-                  {e.name}
-                </option>
-              );
-            })}
-        </select>
-        <Paginado
-          recipesPerPage={recipesPerPage}
-          AllRecipes={AllRecipes.length}
-          paginado={paginado}
-        />
-        {currentRecipes &&
-          currentRecipes.map((e, i) => {
-            return (
-              <Link to={"/home/" + e.id}>
-                <Card
-                  key={i}
-                  image={e.image}
-                  title={e.title}
-                  diets={e.Diets}
-                  id={e.id}
-                  score={e.spoonacularScore}
-                />
-              </Link>
-            );
-          })}
+    <div className={styles.background}>
+          {/* NavBar */}
+          <div className={styles.NavBarPadre}>
+            <Link to="/" className={styles.tittle}>
+              <img
+                src={rataCocinando}
+                alt="img not found"
+                className={styles.imgRat}
+              />
+            </Link>
+            <Link to="/recipe" className={styles.CreateRecipe}>
+              Crear Receta
+            </Link>
+            <SearchBar className={styles.search} />
+            {console.log(AllRecipes)}
+            <button
+              className={styles.button}
+              onClick={(e) => {
+                handleClick(e);
+              }}
+            >
+              Volver a cagar todas las recetas
+            </button>
+          </div>
+      <div className={styles.DivPadre}>
+        <div>
+          {console.log()}
+
+          <br />
+
+          {/* Filtros */}
+          <div className={styles.filter}>
+            <select
+              onChange={(e) => {
+                handleFilterByName(e);
+              }}
+              className={styles.selectFilter}
+            >
+              <option value="" disabled selected>
+                Alphabetic Order
+              </option>
+              <option value="asc">A-Z</option>
+              <option value="desc">Z-A</option>
+            </select>
+            <br />
+            <select
+              className={styles.selectFilter}
+              onChange={(e) => handleFilterByCreate(e)}
+            >
+              <option value="" disabled selected>
+                Order by Creation
+              </option>
+              <option value="All">All - API AND DATABASE</option>
+              <option value="created">Recipe in DataBase </option>
+              <option value="api">Recipe in API </option>
+            </select>
+            <br />
+            <select
+              className={styles.selectFilter}
+              onChange={(e) => {
+                handleFilterByScore(e);
+              }}
+            >
+              <option value="" disabled selected>
+                Filter by Points
+              </option>
+              <option value="asc">Ascendente</option>
+              <option value="desc">Descendente</option>
+            </select>
+            <br />
+            <select
+              className={styles.selectFilter}
+              onChange={(e) => handleFilterDiets(e)}
+            >
+              <option value="" disabled selected>
+                Search by Diets
+              </option>
+              <option value="All">All</option>
+              {AllDiets &&
+                AllDiets.map((e, i) => {
+                  return (
+                    <option key={i} value={e.name}>
+                      {e.name}
+                    </option>
+                  );
+                })}
+            </select>
+          </div>
+          <br />
+          {/* Paginado 1 */}
+          <div className={styles.paginado1}>
+            <Paginado
+              recipesPerPage={recipesPerPage}
+              AllRecipes={AllRecipes.length}
+              paginado={paginado}
+            />
+          </div>
+          {/* cards */}
+
+          <div className={styles.DivCards}>
+            {currentRecipes.length ? (
+              currentRecipes.map((e, i) => {
+                return (
+                  <Link to={"/home/" + e.id}>
+                    <Card
+                      className={styles.cards}
+                      key={i}
+                      image={e.image}
+                      title={e.title}
+                      diets={e.diets}
+                      id={e.id}
+                      score={e.spoonacularScore}
+                      servings={e.servings}
+                      dishTypes={e.dishTypes}
+                    />
+                  </Link>
+                );
+              })
+            ) : (
+              <div className={styles.loader}>
+                <img src={pizza} alt="img not found" />
+              </div>
+            )}
+          </div>
+          <div className={styles.paginado1}>
+            {/* Paginado 2 */}
+            <Paginado
+              recipesPerPage={recipesPerPage}
+              AllRecipes={AllRecipes.length}
+              paginado={paginado}
+            />
+          </div>
+        </div>
       </div>
     </div>
   );

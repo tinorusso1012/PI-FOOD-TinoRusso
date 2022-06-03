@@ -53,7 +53,7 @@ function rootReducer(state = initialState, action) {
         action.payload === "All"
           ? allRecipes
           : allRecipes.filter((e) =>
-              e.Diets.find((j) => j.nameDiet === action.payload.toLowerCase())
+              e.diets.find((j) => j.name === action.payload.toLowerCase())
             );
       console.log(allRecipes);
       console.log(DietsFiltered);

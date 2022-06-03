@@ -13,18 +13,20 @@ export function validate(input) {
   } else if (input.spoonacularScore > 100 || input.spoonacularScore < 1) {
     errors.spoonacularScore = "Score is invalid";
   }
+  if (input.readyInMinutes === 0) {
+    errors.readyInMinutes = "Minutes is required";
+  } else if (input.readyInMinutes > 100 || input.readyInMinutes < 1) {
+    errors.readyInMinutes = "Score is invalid";
+  }
   if (input.HealthScore === 0) {
     errors.HealthScore = "HealthScore is required";
   } else if (input.HealthScore > 100 || input.HealthScore < 1) {
     errors.HealthScore = "HealthScore is invalid";
   }
-  if (
-    input.image &&
-    !/(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/.test(
-      input.image
-    )
-  ) {
-    errors.image = "Required a Link ";
+  if (input.servings === 0) {
+    errors.servings = "Servings is required";
+  } else if (input.servings < 1 || input.servings > 100) {
+    errors.servings = "Servings is invalid";
   }
 
   return errors;

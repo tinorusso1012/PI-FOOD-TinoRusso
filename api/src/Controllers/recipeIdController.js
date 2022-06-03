@@ -6,58 +6,38 @@ const res = require("express/lib/response");
 require("dotenv").config();
 const { API_KEY, CANT_RECIPE } = process.env;
 
-// const GetByID = async (id) => {
-//   try {
-//     let IdFound = Recipe.findByPk(id, {
-//       include: {
-//         models: Diet,
-//       },
-//     });
-//     if (IdFound.length) {
-//       return res.json(IdFound);
-//     }
-//     const apiID = await axios.get(
-//       `https://api.spoonacular.com/recipes/${id}/information?apiKey=${API_KEY}&number=${CANT_RECIPE}&addRecipeInformation=true`
-//     );
-//     const e = await apiID.data;
-// return {
-//   id: e.id,
-//   title: e.title,
-//   summary: e.summary,
-//   image: e.image,
-//   preparationTime: e.preparationMinutes,
-//   diets: e.diets.map((e) => {
-//     return { nameDiet: e };
-//   }),
-//   Instructions: e.analyzedInstructions[0]?.steps.map((e) => {
-//     return e.step;
-//   }),
-//   dishTypes: e.dishTypes.map((e) => {
-//     return { name: e };
-//   }),
-//   healtScore: e.healthScore,
-//   servings: e.servings,
-//   readyInMinutes: e.readyInMinutes,
-// };
-//   } catch (err) {
-//     console.log(err);
-//     res.send("Hubo un error al traer la informacion");
-//   }
-// };
+const GetSpoonacularScore = (summary) => {
+  let index = summary.indexOf("score of") + 9;
+  let number = summary.substring(index, [index + 4]);
+  let numberFinal = "";
+  for (let i = 0; i < number.length; i++) {
+    if (isNaN(number[i]) == false) {
+      numberFinal = numberFinal + number[i];
+    }
+  }
+  return Number(numberFinal);
+};
+const GetSummaryGood = (summary) => {
+  summary = summary.replaceAll("<b>", "");
+  summary = summary.replaceAll("</b>", "");
+  summary = summary.replaceAll("<a>", "");
+  summary = summary.replaceAll("</a>", "");
+  summary = summary.replaceAll("<a", "");
+  summary = summary.replaceAll(">", "");
+  summary = summary.replaceAll("href=", "");
 
-// const GetIdDb = async (id) => {
-//   try {
-//     const dbid = await Recipe.findByPk(id, {
-//       include: {
-//         models: Diet,
-//       },
-//     });
-//     return dbid;
-//   } catch (err) {
-//     console.log(err);
-//   }
-// };
+  return summary;
+};
+const GetInstructionGood = (steps) => {
+  steps = steps.replaceAll("<li>", "");
+  steps = steps.replaceAll("<span>", "");
+  steps = steps.replaceAll("</span>", "");
+  steps = steps.replaceAll("</li>", "");
+  steps = steps.replaceAll("</ol>", "");
+  steps = steps.replaceAll("<ol>", "");
 
+  return steps;
+};
 const GetByID = async (id) => {
   try {
     const apiUrl = await axios.get(
@@ -68,14 +48,12 @@ const GetByID = async (id) => {
     return {
       id: e.id,
       title: e.title,
-      summary: e.summary,
+      spoonacularScore: GetSpoonacularScore(e.summary),
+      summary: GetSummaryGood(e.summary),
       image: e.image,
       preparationTime: e.preparationMinutes,
       diets: e.diets.map((e) => {
-        return { nameDiet: e };
-      }),
-      Instructions: e.analyzedInstructions[0]?.steps.map((e) => {
-        return e.step;
+        return { name: e };
       }),
       dishTypes: e.dishTypes.map((e) => {
         return { name: e };
@@ -83,6 +61,7 @@ const GetByID = async (id) => {
       healtScore: e.healthScore,
       servings: e.servings,
       readyInMinutes: e.readyInMinutes,
+      steps: GetInstructionGood(e.instructions),
     };
 
     //return info;

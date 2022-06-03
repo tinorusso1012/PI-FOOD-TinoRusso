@@ -1,0 +1,137 @@
+.background{
+    height: 100vh;
+    width: 100%;
+    display: flex !important;
+    flex-direction: column;
+    background-image: url(../../Imagenes/Fondo1.jpeg);
+    background-size: cover;
+    overflow: auto;
+    padding: 30px;
+}
+.imgRat{
+    width: 4rem;
+    height: 20;
+    border-radius: 10px;
+  }
+.DivPadre{
+    background: rgba(255,255,255,0.1);
+    box-shadow: 0 0 10px rgb(0, 0, 0);
+    border-radius: 25px;
+    backdrop-filter: blur(5px);
+    border: 3px solid rgb(0, 0, 0);
+
+    /* padding: 13px 19px 13px 19px; */
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+}
+.NavBarPadre{
+    background-color: transparent;
+    display: flex ;
+    justify-content: center;
+    position: relative;
+    flex-direction:row;
+    align-items:center;
+    place-content: space-around;
+    padding: 2% 0% 2% 0%;
+}
+.title{
+    background-color: rgb(255, 255, 255);
+    border-radius: 20px;
+    border: none;
+    padding: 10px 25px 10px 25px;
+    box-shadow: 5px 2px 2px 1px rgba(0, 0, 0, 0.2);
+    font-weight: 20;
+    font-size: 20px;
+}
+.title:hover{
+    background-color: #2B3951;
+    transition-delay: 0.2s;
+    transition: 0.8s;
+    color: white;
+    cursor: pointer;
+    
+}
+.CreateRecipe{
+    background-color: rgb(255, 255, 255);
+    border-radius: 20px;
+    border: none;
+    padding: 10px 7px 10px 7px;
+    box-shadow: 5px 2px 2px 1px rgba(0, 0, 0, 0.2);
+}
+.CreateRecipe:hover{
+    background-color: #2B3951;
+    transition-delay: 0.2s;
+    transition: 0.8s;
+    color: white;
+}
+.search{
+    display: flex;
+    justify-content: center;
+    margin-left: 50%;
+  }
+
+  .button{
+    background-color: rgb(255, 255, 255);
+    border-radius: 20px;
+    border: none;
+    padding: 10px 7px 10px 7px;
+    box-shadow: 5px 2px 2px 1px rgba(0, 0, 0, 0.2);
+}
+.button:hover{
+    background-color: #2B3951;
+    transition-delay: 0.2s;
+    transition: 0.8s;
+    color: white;
+    cursor: pointer;
+}
+.filter{
+    background: transparent;
+    border-radius: 20px;
+    border: 1.5px solid #ffffff;
+
+    display: flex;
+    align-items: center;
+    align-content: stretch;
+    justify-content: center;
+    place-content: space-around;
+    padding: 15px 0px 15px 0px;
+}
+.selectFilter{
+    background-color: rgb(255, 255, 255);
+    border-radius: 20px;
+    border: none;
+    padding: 10px 7px 10px 7px;
+    box-shadow: 5px 2px 2px 1px rgba(0, 0, 0, 0.2);
+}
+.selectFilter:hover{
+    background-color: #2B3951;
+    transition-delay: 0.2s;
+    transition: 0.8s;
+    color: white;
+    cursor: pointer;
+}
+.paginado1{
+    background: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    padding: 5px 0px 5px 1px;
+    flex-direction: row !important;
+}
+.DivCards{
+    justify-self: start;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    text-decoration: none;
+}
+
+    .cargandoGif {
+
+        margin-top: 420px;
+        margin-left: 430px;
+      
+  }

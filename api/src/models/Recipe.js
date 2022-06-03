@@ -35,7 +35,7 @@ module.exports = (sequelize) => {
       },
     },
     image: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       defaultValue:
         "https://previews.123rf.com/images/jenifoto/jenifoto2006/jenifoto200600100/150438480-marco-de-comida-de-barbacoa-de-verano-con-hot-dog-y-buffet-de-hamburguesas-sobre-un-fondo-de-madera-.jpg",
     },
@@ -47,10 +47,10 @@ module.exports = (sequelize) => {
       allowNull: false,
       defaultValue: true,
     },
-    dishTypes: {
-      type: DataTypes.ARRAY(DataTypes.JSON),
+    readyInMinutes: {
+      type: DataTypes.INTEGER,
     },
-    Diets: {
+    dishTypes: {
       type: DataTypes.ARRAY(DataTypes.JSON),
     },
     servings: {

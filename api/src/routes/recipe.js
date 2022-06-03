@@ -2,11 +2,7 @@ const { Router } = require("express");
 const { Diet, Recipe } = require("../db");
 const router = Router();
 const axios = require("axios");
-const {
-  getRecipe,
-  getRecipeFromDb,
-  getApiAndDb,
-} = require("../Controllers/recipeController");
+const { getApiAndDb } = require("../Controllers/recipeController");
 const { getIdAll } = require("../Controllers/recipeIdController");
 
 router.get("/", async (req, res) => {
@@ -28,6 +24,7 @@ router.get("/", async (req, res) => {
     }
   } catch (err) {
     return res.status(500).send("Server Error");
+    console.log(err);
   }
 });
 
@@ -52,32 +49,36 @@ router.post("/recipe", async (req, res) => {
     HealthScore,
     image,
     steps,
+    readyInMinutes,
     DB,
     dishTypes,
     servings,
-    Diets,
+    diets,
   } = req.body;
   try {
-    const DietsOriginal = Diets;
-    Diets = Diets.map((e) => {
-      return { nameDiet: e };
-    });
     let newRecipe = await Recipe.create({
       title,
       summary,
       spoonacularScore,
       HealthScore,
       image,
+      readyInMinutes,
       steps,
       DB,
       dishTypes,
       servings,
-      Diets,
     });
-    let dietsdb = await Diet.findOne({
-      where: { name: DietsOriginal },
-    });
-    newRecipe.addDiet(dietsdb);
+    for (let i = 0; i < diets.length; i++) {
+      let dietsdb = await Diet.findOne({
+        where: { name: diets[i] },
+      });
+      if (dietsdb) {
+        newRecipe.addDiet(dietsdb);
+      } else {
+        let newDiet = await Diet.create({ name: diets[i] });
+        newRecipe.addDiet(newDiet);
+      }
+    }
     res.status(201).json(newRecipe);
   } catch (err) {
     console.log(err);

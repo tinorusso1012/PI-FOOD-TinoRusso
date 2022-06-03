@@ -16,6 +16,17 @@ const GetSpoonacularScore = (summary) => {
   }
   return Number(numberFinal);
 };
+const GetSummaryGood = (summary) => {
+  summary = summary.replaceAll("<b>", "");
+  summary = summary.replaceAll("</b>", "");
+  summary = summary.replaceAll("<a>", "");
+  summary = summary.replaceAll("</a>", "");
+  summary = summary.replaceAll("<a", "");
+  summary = summary.replaceAll(">", "");
+  summary = summary.replaceAll("href=", "");
+
+  return summary;
+};
 const getRecipe = async () => {
   const ApiResult = await axios.get(
     `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&number=${CANT_RECIPE}&addRecipeInformation=true`
@@ -24,11 +35,12 @@ const getRecipe = async () => {
     return {
       id: e.id,
       title: e.title,
-      summary: e.summary,
+      summary: GetSummaryGood(e.summary),
       image: e.image,
       preparationTime: e.preparationMinutes,
-      Diets: e.diets.map((e) => {
-        return { nameDiet: e };
+      readyInMinutes: e.readyInMinutes,
+      diets: e.diets.map((e) => {
+        return { name: e };
       }),
       Instructions: e.analyzedInstructions[0]?.steps.map((e) => {
         return e.step;
@@ -38,7 +50,6 @@ const getRecipe = async () => {
       }),
       healtScore: e.healthScore,
       servings: e.servings,
-      readyInMinutes: e.readyInMinutes,
       spoonacularScore: GetSpoonacularScore(e.summary),
     };
   });
