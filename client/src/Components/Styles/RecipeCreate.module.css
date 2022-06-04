@@ -41,6 +41,7 @@ p.danger {
   border: none;
   padding: 10px 7px 10px 7px;
   box-shadow: 5px 2px 2px 1px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
 }
 .background{
   height: 100vh;
