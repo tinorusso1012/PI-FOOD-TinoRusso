@@ -252,8 +252,12 @@ export default function RecipeCreate() {
                 placeholder="Enter new diet..."
                 onChange={(e) => handleNewDiet(e)}
               ></input>
-              <button disabled={!newDiet} onClick={(e) => setNewDietClick(e)}>
-                Enviar Nueva Receta
+              <button
+                className={styles.button2}
+                disabled={!newDiet}
+                onClick={(e) => setNewDietClick(e)}
+              >
+                Create new Diet
               </button>
               {errorsArr.diets && (
                 <p className={styles.danger}>{errorsArr.diets}</p>
@@ -370,11 +374,12 @@ export default function RecipeCreate() {
                 }}
               />
               <button
+                className={styles.button2}
                 onClick={(e) => {
                   handleStep(e);
                 }}
               >
-                Enviar
+                Create Recipe
               </button>
             </div>
             <div>
