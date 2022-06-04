@@ -253,7 +253,7 @@ export default function RecipeCreate() {
                 onChange={(e) => handleNewDiet(e)}
               ></input>
               <button
-                className={styles.button2}
+                className={styles.button3}
                 disabled={!newDiet}
                 onClick={(e) => setNewDietClick(e)}
               >
@@ -379,7 +379,7 @@ export default function RecipeCreate() {
                   handleStep(e);
                 }}
               >
-                Create Recipe
+                Send number of steps
               </button>
             </div>
             <div>
@@ -399,6 +399,7 @@ export default function RecipeCreate() {
             </div>
             <div className="DivForm">
               <button
+                className={styles.button2}
                 onClick={(e) => {
                   HandlePost(e);
                 }}
