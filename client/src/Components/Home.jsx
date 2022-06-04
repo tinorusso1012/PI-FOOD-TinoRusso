@@ -131,8 +131,8 @@ export default function Home() {
               <option value="" disabled selected>
                 Filter by Points
               </option>
-              <option value="asc">Ascendente</option>
-              <option value="desc">Descendente</option>
+              <option value="asc">Highest to Lowest</option>
+              <option value="desc">Smallest to Largest</option>
             </select>
             <br />
             <select
