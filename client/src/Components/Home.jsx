@@ -66,29 +66,29 @@ export default function Home() {
 
   return (
     <div className={styles.background}>
-          {/* NavBar */}
-          <div className={styles.NavBarPadre}>
-            <Link to="/" className={styles.tittle}>
-              <img
-                src={rataCocinando}
-                alt="img not found"
-                className={styles.imgRat}
-              />
-            </Link>
-            <Link to="/recipe" className={styles.CreateRecipe}>
-              Crear Receta
-            </Link>
-            <SearchBar className={styles.search} />
-            {console.log(AllRecipes)}
-            <button
-              className={styles.button}
-              onClick={(e) => {
-                handleClick(e);
-              }}
-            >
-              Volver a cagar todas las recetas
-            </button>
-          </div>
+      {/* NavBar */}
+      <div className={styles.NavBarPadre}>
+        <Link to="/" className={styles.tittle}>
+          <img
+            src={rataCocinando}
+            alt="img not found"
+            className={styles.imgRat}
+          />
+        </Link>
+        <Link to="/recipe" className={styles.CreateRecipe}>
+          Create Recipe
+        </Link>
+        <SearchBar className={styles.search} />
+        {console.log(AllRecipes)}
+        <button
+          className={styles.button}
+          onClick={(e) => {
+            handleClick(e);
+          }}
+        >
+          Reload All Recipe
+        </button>
+      </div>
       <div className={styles.DivPadre}>
         <div>
           {console.log()}
@@ -117,8 +117,8 @@ export default function Home() {
               <option value="" disabled selected>
                 Order by Creation
               </option>
-              <option value="All">All - API AND DATABASE</option>
-              <option value="created">Recipe in DataBase </option>
+              <option value="All">All </option>
+              <option value="created">Recipe Created </option>
               <option value="api">Recipe in API </option>
             </select>
             <br />
