@@ -7,10 +7,12 @@ import {
   FilterByCreate,
   FilterByName,
   FilterByScore,
+  changePage,
 } from "../Actions";
 import { Link } from "react-router-dom";
 import Card from "./Card";
 import Paginado from "./Paginado";
+import Paginado2 from "./Paginado2";
 import SearchBar from "./SearchBar";
 import styles from "./Styles/Home..module.css";
 import pizza from "../Imagenes/PizzaLoading.gif";
@@ -21,6 +23,7 @@ export default function Home() {
   const AllRecipes = useSelector((state) => state.recipes);
   const AllDiets = useSelector((state) => state.diets);
   const [currentPage, setCurrentPage] = useState(1);
+  const page = useSelector((state) => state.page);
   const [orden, setOrden] = useState("");
   const [recipesPerPage, setRecipesPerPages] = useState(9);
   const indexOfLastRecipe = currentPage * recipesPerPage;
@@ -29,9 +32,14 @@ export default function Home() {
     indexOfFirstRecipe,
     indexOfLastRecipe
   );
+  // paginado 2
+  const start = indexOfFirstRecipe * recipesPerPage;
+  const end = start + recipesPerPage;
+  const max = Math.ceil(AllRecipes.length / recipesPerPage);
 
   const paginado = (pageNumber) => {
     setCurrentPage(pageNumber);
+    dispatch(changePage(pageNumber));
   };
 
   useEffect(() => {
@@ -79,7 +87,6 @@ export default function Home() {
           Create Recipe
         </Link>
         <SearchBar className={styles.search} />
-        {console.log(AllRecipes)}
         <button
           className={styles.button}
           onClick={(e) => {
@@ -91,7 +98,6 @@ export default function Home() {
       </div>
       <div className={styles.DivPadre}>
         <div>
-          {console.log()}
 
           <br />
 
@@ -191,11 +197,7 @@ export default function Home() {
           </div>
           <div className={styles.paginado1}>
             {/* Paginado 2 */}
-            <Paginado
-              recipesPerPage={recipesPerPage}
-              AllRecipes={AllRecipes.length}
-              paginado={paginado}
-            />
+            <Paginado2 max={max} paginado={paginado} pageHome={currentPage} />
           </div>
         </div>
       </div>

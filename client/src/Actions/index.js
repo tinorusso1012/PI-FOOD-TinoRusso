@@ -9,7 +9,9 @@ export const GET_RECIPE_BY_NAME = "GET_RECIPE_BY_NAME";
 export const POST_RECIPE = "POST_RECIPE";
 export const GET_RECIPE_BY_ID = "GET_RECIPE_BY_ID";
 export const GET_DETAILRESET = "GET_DETAILRESET";
-
+export const NEXT_PAGE = "NEXT_PAGE";
+export const PREV_PAGE = "PREV_PAGE";
+export const CHANGE_PAGE = "CHANGE_PAGE";
 export function getRecipes() {
   return async function (dispatch) {
     var json = await axios.get("/recipes");
@@ -101,5 +103,25 @@ export function FilterByScore(payload) {
   return {
     type: FILTER_BY_SCORE,
     payload,
+  };
+  
+}
+
+export const nextPage = () => {
+  return {
+    type: NEXT_PAGE,
+  };
+};
+
+export const prevPage = () => {
+  return {
+    type: PREV_PAGE,
+  };
+};
+
+export const changePage = (page) => {
+  return {
+    type: CHANGE_PAGE,
+    payload: page,
   };
 }

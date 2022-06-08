@@ -14,7 +14,7 @@ export default function Detail(prop) {
   const myRecipe = useSelector((state) => state.detail);
   return (
     <div className={styles.background}>
-      {console.log(myRecipe)}
+
       {/* NavBar */}
       <div className={styles.contNavBarPadre}>
         <Link to="/" className={styles.title}>
@@ -37,7 +37,7 @@ export default function Detail(prop) {
         ) : (
           <div className={styles.contDetailsPadre}>
             <div className={styles.contDetailOne}>
-              {console.log(myRecipe)}
+
 
               {/* IMAGEN */}
               <div className={styles.contDetailImgPadre}>

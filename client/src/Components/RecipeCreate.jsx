@@ -92,7 +92,7 @@ export default function RecipeCreate() {
   }
   function handleNewDiet(e) {
     setErrorsArr(validateArray(e.target.value, listOfDiets));
-    console.log(errorsArr);
+
     setNewDiet(e.target.value);
   }
   function setNewDietClick(e) {
@@ -125,7 +125,7 @@ export default function RecipeCreate() {
       return { name: e };
     });
     setInput((input.dishTypes = arr));
-    console.log(input);
+
     dispatch(PostRecipe(input))
       .then(() => {
         alert("Recipe Created");

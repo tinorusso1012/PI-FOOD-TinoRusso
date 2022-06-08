@@ -24,7 +24,7 @@ function LandingPage() {
           <option value="EN">EN</option>
         </select>
         <div className={styles.contText}>
-          {console.log(Select)}
+
           {Select === "ES" ? (
             <h1>Comer es una necesidad,</h1>
           ) : (

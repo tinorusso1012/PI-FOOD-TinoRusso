@@ -1,0 +1,35 @@
+.paginado{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+.btn{
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.575);
+    border-radius: 50%;
+    border: none;
+    box-shadow: 5px 2px 2px 1px rgba(0, 0, 0, 0.2);
+    margin: 5px;
+}
+.btn:hover{
+    transform: scale(1.1);
+    transition: all 1s ease;
+}
+.PaginadoInput{
+    background-color: rgb(255, 255, 255);
+    border-radius: 15px;
+    border: solid black;
+    padding: 10px;
+    padding: 8px 5px 8px 5px;
+    box-shadow: 5px 2px 2px 1px rgba(0, 0, 0, 0.2);
+    left: 10px;
+}
+.divPaginado2{
+display: flex;
+flex-direction: row;
+align-items: center;
+justify-content: center;
+}
