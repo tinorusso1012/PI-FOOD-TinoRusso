@@ -141,6 +141,7 @@ export default function RecipeCreate() {
           servings: 0,
           diets: [],
         });
+        setDiet([]);
       })
       .catch((err) => {
         console.log(err);
