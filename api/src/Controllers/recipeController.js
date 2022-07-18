@@ -27,11 +27,13 @@ const GetSummaryGood = (summary) => {
 
   return summary;
 };
+// `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&number=${CANT_RECIPE}&addRecipeInformation=true`
+//  ApiResult.data?.results.map((e)
 const getRecipe = async () => {
   const ApiResult = await axios.get(
-    `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&number=${CANT_RECIPE}&addRecipeInformation=true`
+    `https://api-pi-food-default-rtdb.firebaseio.com/results.json`
   );
-  const result = await ApiResult.data?.results.map((e) => {
+  const result = await ApiResult.data?.map((e) => {
     return {
       id: e.id,
       title: e.title,
