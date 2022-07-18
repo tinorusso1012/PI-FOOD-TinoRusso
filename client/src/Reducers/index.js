@@ -9,9 +9,6 @@ import {
   GET_RECIPE_BY_ID,
   POST_RECIPE,
   GET_DETAILRESET,
-  NEXT_PAGE,
-  PREV_PAGE,
-  CHANGE_PAGE,
 } from "../Actions/index";
 const initialState = {
   recipes: [],
@@ -56,7 +53,7 @@ function rootReducer(state = initialState, action) {
         action.payload === "All"
           ? allRecipes
           : allRecipes.filter((e) =>
-              e.diets.find((j) => j.name === action.payload.toLowerCase())
+              e.diets.find((j) => j === action.payload.toLowerCase())
             );
       console.log(allRecipes);
       console.log(DietsFiltered);
@@ -127,21 +124,7 @@ function rootReducer(state = initialState, action) {
         ...state,
         recipes: ArrSortScore,
       };
-      case NEXT_PAGE:
-        return {
-          ...state,
-          page: state.page + 1,
-        };
-      case PREV_PAGE:
-        return {
-          ...state,
-          page: state.page - 1,
-        };
-      case CHANGE_PAGE:
-        return {
-          ...state,
-          page: action.payload,
-        };
+
     default:
       return state;
   }

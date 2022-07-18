@@ -6,25 +6,20 @@ const { getApiAndDb } = require("../Controllers/recipeController");
 const { getIdAll } = require("../Controllers/recipeIdController");
 
 router.get("/", async (req, res) => {
-  try {
-    const { name } = req.query;
-    const APITOTAL = await getApiAndDb();
-    if (name) {
-      const recipeName = APITOTAL.filter((element) =>
-        element.title.toLowerCase().includes(name.toString().toLowerCase())
-      );
-      console.log(recipeName);
-      if (recipeName.length) {
-        return res.status(200).send(recipeName);
-      } else {
-        return res.status(404).send("Recipe not Found");
-      }
+  const { name } = req.query;
+  const APITOTAL = await getApiAndDb();
+  console.log(APITOTAL);
+  if (name) {
+    const recipeName = APITOTAL.filter((element) =>
+      element.title.toLowerCase().includes(name.toString().toLowerCase())
+    );
+    if (recipeName.length) {
+      return res.status(200).send(recipeName);
     } else {
-      return res.status(200).send(APITOTAL);
+      return res.status(404).send("Recipe not Found");
     }
-  } catch (err) {
-    return res.status(500).send("Server Error");
-    console.log(err);
+  } else {
+    return res.status(200).send(APITOTAL);
   }
 });
 
@@ -56,7 +51,12 @@ router.post("/recipe", async (req, res) => {
     diets,
   } = req.body;
   try {
+    let LastRecipe = await Recipe.findAll();
+    LastRecipe = LastRecipe.pop();
+    const id = LastRecipe.id + 1;
+    console.log("ACAMIREY", id, LastRecipe);
     let newRecipe = await Recipe.create({
+      id,
       title,
       summary,
       spoonacularScore,
@@ -67,16 +67,14 @@ router.post("/recipe", async (req, res) => {
       DB,
       dishTypes,
       servings,
+      diets,
     });
     for (let i = 0; i < diets.length; i++) {
       let dietsdb = await Diet.findOne({
         where: { name: diets[i] },
       });
-      if (dietsdb) {
-        newRecipe.addDiet(dietsdb);
-      } else {
-        let newDiet = await Diet.create({ name: diets[i] });
-        newRecipe.addDiet(newDiet);
+      if (!dietsdb) {
+        await Diet.create({ name: diets[i] });
       }
     }
     res.status(201).json(newRecipe);

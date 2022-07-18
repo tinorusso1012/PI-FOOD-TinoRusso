@@ -10,8 +10,7 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     id: {
-      type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4,
+      type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
     },
@@ -25,36 +24,46 @@ module.exports = (sequelize) => {
         min: 0,
         max: 100,
       },
+      allowNull: true,
     },
     HealthScore: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       validate: {
         min: 0,
         max: 100,
       },
+      allowNull: true,
     },
     image: {
       type: DataTypes.TEXT,
       defaultValue:
         "https://previews.123rf.com/images/jenifoto/jenifoto2006/jenifoto200600100/150438480-marco-de-comida-de-barbacoa-de-verano-con-hot-dog-y-buffet-de-hamburguesas-sobre-un-fondo-de-madera-.jpg",
     },
+
     steps: {
       type: DataTypes.ARRAY(DataTypes.JSON),
+      allowNull: true,
     },
     DB: {
       type: DataTypes.BOOLEAN,
-      allowNull: false,
       defaultValue: true,
     },
     readyInMinutes: {
       type: DataTypes.INTEGER,
+      allowNull: true,
     },
     dishTypes: {
       type: DataTypes.ARRAY(DataTypes.JSON),
+      allowNull: true,
     },
     servings: {
       type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    diets: {
+      type: DataTypes.ARRAY(DataTypes.JSON),
+      allowNull: true,
     },
   });
 };

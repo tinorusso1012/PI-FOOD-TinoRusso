@@ -14,6 +14,7 @@ export default function RecipeCreate() {
   const dispatch = useDispatch();
   let listOfDiets = useSelector((state) => state.diets);
   const [cantSteps, setCantSteps] = useState(1);
+  // Errores
   const [errors, setErrors] = useState({
     title: " ",
     summary: " ",
@@ -23,6 +24,7 @@ export default function RecipeCreate() {
     readyInMinutes: " ",
     servings: " ",
   });
+  // Errores Dietas
   const [errorsArr, setErrorsArr] = useState({
     diets: "",
   });
@@ -32,6 +34,7 @@ export default function RecipeCreate() {
   const [step, setStep] = useState([]);
   const [Finalstep, setFinalStep] = useState([]);
   const [DishTypes, setDishTypes] = useState("");
+  // Estados Que se mandan al Post
   const [input, setInput] = useState({
     title: "",
     summary: "",
@@ -62,7 +65,7 @@ export default function RecipeCreate() {
       [e.target.name]: e.target.value,
     });
   }
-
+// Funcion para setear el array de las checkbox
   function handleCheckbox(e) {
     if (e.target.checked) {
       const arr = [e.target.value];
@@ -71,7 +74,7 @@ export default function RecipeCreate() {
     let arr2 = diet.filter((el) => el !== e.target.value);
     setDiet(arr2);
   }
-
+// Funcion para llenar el  array de la cantidad de pasos
   function handleStep(e) {
     e.preventDefault();
     setDo(true);
@@ -81,20 +84,23 @@ export default function RecipeCreate() {
     }
     setStep(arr);
   }
+  // Funcion para setear la cantidad de pasos
   function handleStepInArray(e) {
     let arr = Finalstep;
     arr[e.target.name - 1] = e.target.value;
     setFinalStep(arr);
   }
-
+//Funcion para setear DishType ( en String )
   function handleDishType(e) {
     setDishTypes(e.target.value);
   }
+  // Funcion para setear una nueva dieta
   function handleNewDiet(e) {
     setErrorsArr(validateArray(e.target.value, listOfDiets));
 
     setNewDiet(e.target.value);
   }
+  // Funcion para setear una nueva dieta ( Click)
   function setNewDietClick(e) {
     e.preventDefault();
     if (!errorsArr.diets) {
@@ -103,6 +109,8 @@ export default function RecipeCreate() {
     } else {
     }
   }
+
+  // Funcion para finalmente Postear
   function HandlePost(e) {
     e.preventDefault();
     if (

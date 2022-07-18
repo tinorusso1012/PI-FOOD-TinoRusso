@@ -13,7 +13,7 @@ export default function Card({ image, title, diets, score, servings }) {
             <ul className={styles.ps}>
               Diets:
               {diets.map((e, i) => {
-                return <li key={i}>{e.name}</li>;
+                return <li key={i}>{e}</li>;
               })}
             </ul>
           }
