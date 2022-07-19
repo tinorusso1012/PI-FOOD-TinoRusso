@@ -38,48 +38,9 @@ const GetInstructionGood = (steps) => {
 
   return steps;
 };
-const GetByID = async (id) => {
-  try {
-    const apiUrl = await axios.get(
-      `https://api.spoonacular.com/recipes/${id}/information?apiKey=${API_KEY}&number=${CANT_RECIPE}&addRecipeInformation=true`
-    );
-    // const recipeInfo = [apiUrl];
-    const e = apiUrl.data;
-    return {
-      id: e.id,
-      title: e.title,
-      spoonacularScore: GetSpoonacularScore(e.summary),
-      summary: GetSummaryGood(e.summary),
-      image: e.image,
-      preparationTime: e.preparationMinutes,
-      diets: e.diets.map((e) => {
-        return { name: e };
-      }),
-      dishTypes: e.dishTypes.map((e) => {
-        return { name: e };
-      }),
-      healtScore: e.healthScore,
-      servings: e.servings,
-      readyInMinutes: e.readyInMinutes,
-      steps: GetInstructionGood(e.instructions),
-    };
-
-    //return info;
-  } catch (error) {
-    return undefined;
-  }
-};
 const GetIdDb = async (id) => {
   try {
-    const dbId = await Recipe.findByPk(id, {
-      include: {
-        model: Diet,
-        attributes: ["name"],
-        through: {
-          attributes: [],
-        },
-      },
-    });
+    const dbId = await Recipe.findByPk(id);
 
     return dbId;
   } catch (error) {
@@ -88,14 +49,11 @@ const GetIdDb = async (id) => {
 };
 
 const getIdAll = async (id) => {
-  const idApi = GetByID(id);
-  const idDb = GetIdDb(id);
-  const [Api, Db] = await Promise.all([idApi, idDb]);
-  return Api || Db;
+  const idDb = await GetIdDb(id);
+  return idDb;
 };
 
 module.exports = {
   GetIdDb,
-  GetByID,
   getIdAll,
 };
