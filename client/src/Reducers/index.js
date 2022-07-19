@@ -9,12 +9,16 @@ import {
   GET_RECIPE_BY_ID,
   POST_RECIPE,
   GET_DETAILRESET,
+  NEXT_PAGE,
+  PREV_PAGE,
+  CHANGE_PAGE,
 } from "../Actions/index";
 const initialState = {
   recipes: [],
   AllRecipes: [],
   diets: [],
   detail: [],
+  page: 1,
 };
 
 function rootReducer(state = initialState, action) {
@@ -124,6 +128,21 @@ function rootReducer(state = initialState, action) {
         ...state,
         recipes: ArrSortScore,
       };
+      case NEXT_PAGE:
+        return {
+          ...state,
+          page: state.page + 1,
+        };
+      case PREV_PAGE:
+        return {
+          ...state,
+          page: state.page - 1,
+        };
+      case CHANGE_PAGE:
+        return {
+          ...state,
+          page: action.payload,
+        };
 
     default:
       return state;
